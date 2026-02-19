@@ -12,7 +12,7 @@ const SearchBar = () => {
     }
   }, [debouncedSearchTerm]);
   return (
-    <form className="flex items-center flex-1 rounded-lg bg-gray-100 px-3 py-2 gap-2">
+    <form className="flex items-center flex-1 min-w-0 rounded-lg bg-gray-100 px-3 py-2 gap-2">
       <BiSearch className="text-gray-400 text-lg shrink-0" />
       <input
         type="text"
