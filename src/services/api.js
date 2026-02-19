@@ -1,6 +1,5 @@
 import ky from "ky";
-
-const API_BASE_URL = import.meta.env.API_BASE_URL;
+import { API_BASE_URL } from "../utils/constants";
 
 export const api = ky.create({
   prefixUrl: API_BASE_URL,
