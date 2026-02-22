@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import HomePage from "./Pages/HomePage";
+import ProductPage from "./Pages/ProductsPage";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" Component={HomePage} />
+      <Route path="/products" Component={ProductPage} />
     </Routes>
   );
 }
