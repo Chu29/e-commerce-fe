@@ -14,6 +14,7 @@ const FilterBar = () => {
       id="filter"
       className="rounded-lg border border-gray-200 bg-white px-2 sm:px-3 py-2 text-xs sm:text-sm text-gray-700 outline-none cursor-pointer hover:border-gray-300 transition-colors shrink-0"
     >
+      <option value="">All categories</option>
       {isError ? (
         <option value="">Error loading categories</option>
       ) : isLoading ? (

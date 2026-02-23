@@ -10,8 +10,8 @@ const Hero = () => {
       {/* Hero content */}
       <div className="relative z-10 flex flex-col items-center text-center max-w-3xl mx-auto">
         <h1 className="text-5xl sm:text-6xl md:text-6xl font-extrabold leading-tight tracking-tight text-gray-900">
-          Manage Your Product API&nbsp;with{" "}
-          <span className="text-[#3b3bf5]">Ease.</span>
+          Manage Your <br />
+          E-commerce API&nbsp;with <span className="text-[#3b3bf5]">Ease.</span>
         </h1>
 
         <p className="mt-6 max-w-xl text-lg text-gray-500 leading-relaxed">
