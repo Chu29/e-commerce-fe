@@ -1,14 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { SyncLoader } from "react-spinners";
 import { fetchProducts } from "../../services/product.service";
 import ProductCard from "../ProductCard";
 import productNotFound from "../../assets/images/product_not_found.png";
 
 const Main = () => {
+  const queryClient = useQueryClient();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["products"],
     queryFn: fetchProducts,
   });
+
+  const handleDeleted = () => {
+    queryClient.invalidateQueries({ queryKey: ["products"] });
+  };
 
   if (isLoading) {
     return (
@@ -32,7 +37,11 @@ const Main = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {data?.products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              onDeleted={handleDeleted}
+            />
           ))}
         </div>
       )}
