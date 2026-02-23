@@ -1,8 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import ProductPage from "./Pages/ProductsPage";
 import LandingPage from "./Pages/LandingPage";
-import ProductForm from "./components/NewProductForm";
 import CreateProductPage from "./Pages/CreateProductPage";
+import EditProductPage from "./Pages/EditProductPage";
+import ProductDetailsPage from "./Pages/ProductDetailsPage";
 
 function App() {
   return (
@@ -10,6 +11,8 @@ function App() {
       <Route path="/" Component={LandingPage} />
       <Route path="/products" Component={ProductPage} />
       <Route path="/products/new" Component={CreateProductPage} />
+      <Route path="/products/:id/edit" Component={EditProductPage} />
+      <Route path="/products/:id/details" Component={ProductDetailsPage} />
     </Routes>
   );
 }
