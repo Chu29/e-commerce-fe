@@ -1,10 +1,21 @@
 import { FiEdit2 } from "react-icons/fi";
 import { FiTrash2 } from "react-icons/fi";
 import placeHolderImg from "../assets/images/placeholder_product_img.jpg";
+import { api } from "../services/api";
 
 const ProductCard = ({ product }) => {
+  const onDeleteHandler = async (productId) => {
+    try {
+      await api.delete(`products/${productId}`);
+
+      window.location.reload(); // Reload the page to reflect changes
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden max-w-xs flex flex-col">
+    <article className="bg-white rounded-xl shadow-md overflow-hidden max-w-xs flex flex-col">
       {/* Image Section */}
       <div className="relative">
         <img
@@ -27,7 +38,7 @@ const ProductCard = ({ product }) => {
           <h3 className="text-base font-semibold text-gray-900 leading-tight line-clamp-2">
             {product.name}
           </h3>
-          <span className="text-2xl font-bold text-emerald-600 mt-1 block">
+          <span className="text-2xl font-extrabold text-[#3b3bf5] mt-1 block">
             {Number(product.price).toLocaleString("fr-CM")} FCFA
           </span>
         </div>
@@ -43,12 +54,15 @@ const ProductCard = ({ product }) => {
             <FiEdit2 className="w-4 h-4" />
             Edit
           </button>
-          <button className="inline-flex items-center justify-center p-2 text-red-500 bg-red-50 rounded-lg hover:bg-red-100 transition-colors cursor-pointer">
+          <button
+            className="inline-flex items-center justify-center p-2 text-red-500 bg-red-50 rounded-lg hover:bg-red-100 transition-colors cursor-pointer"
+            onClick={() => onDeleteHandler(product.id)}
+          >
             <FiTrash2 className="w-4 h-4" />
           </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 
