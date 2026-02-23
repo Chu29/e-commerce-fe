@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-linear-to-br from-white via-indigo-50/40 to-purple-100/60 px-4 py-20">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-linear-to-br from-white via-indigo-50/40 to-purple-100/60 px-4 py-20 z-0 ">
       {/* Background decorative blobs */}
       <div className="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-purple-200/40 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-indigo-200/30 blur-3xl" />
