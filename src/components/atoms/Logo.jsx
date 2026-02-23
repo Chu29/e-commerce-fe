@@ -1,8 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import logo from "/logo.png";
 
 const Logo = () => {
+  const navigate = useNavigate();
   return (
-    <div className="text-lg sm:text-xl font-bold text-gray-800 whitespace-nowrap">
+    <div
+      onClick={() => navigate("/")}
+      className=" cursor-pointer text-lg sm:text-xl font-bold text-gray-800 whitespace-nowrap"
+    >
       <img
         src={logo}
         alt="E-Buy Logo"
