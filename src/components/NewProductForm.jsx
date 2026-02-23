@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 import { fetchCategories } from "../services/category.service";
 import { createProduct, uploadProductImage } from "../services/product.service";
 
@@ -92,6 +93,12 @@ const NewProductForm = () => {
     setError(null);
 
     try {
+      if (formData.imageUrl && formData.imageUrl.length > 2048) {
+        setError("Image URL is too long (max 2048 characters)");
+        setIsSubmitting(false);
+        return;
+      }
+
       const payload = {
         name: formData.name,
         price: parseFloat(formData.price) || 0,
@@ -437,26 +444,7 @@ const NewProductForm = () => {
           >
             {isSubmitting || isUploading ? (
               <>
-                <svg
-                  className="h-4 w-4 animate-spin"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                  />
-                </svg>
+                <ClipLoader size={16} color="#ffffff" />
                 {isUploading ? "Uploading image…" : "Saving…"}
               </>
             ) : (
