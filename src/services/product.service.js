@@ -55,3 +55,15 @@ export const editProduct = async (productId, productData) => {
     throw new Error("Failed to edit product");
   }
 };
+
+export const searchProducts = async (query) => {
+  try {
+    const response = await api.get(`products/search`, {
+      searchParams: { search: query },
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to search products");
+  }
+};
