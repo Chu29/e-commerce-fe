@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { FiEdit2, FiTrash2, FiArrowLeft } from "react-icons/fi";
 import { ClipLoader } from "react-spinners";
 import Logo from "../components/atoms/Logo";
-import Header from "../components/molecules/Header";
+import Header from "../components/atoms/Header";
 import { fetchProductById } from "../services/product.service";
 import { api } from "../services/api";
 import placeHolderImg from "../assets/images/placeholder_product_img.jpg";

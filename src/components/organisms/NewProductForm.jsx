@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import { fetchCategories } from "../services/category.service";
+import { fetchCategories } from "../../services/category.service";
 import {
-  editProduct,
-  fetchProductById,
+  createProduct,
   uploadProductImage,
-} from "../services/product.service";
+} from "../../services/product.service";
 
-const EditProductForm = () => {
-  const { id } = useParams();
+const NewProductForm = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -26,44 +24,25 @@ const EditProductForm = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
 
-  // Load product data and categories
   useEffect(() => {
-    const loadData = async () => {
+    const loadCategories = async () => {
       try {
-        const [productRes, categoryRes] = await Promise.all([
-          fetchProductById(id),
-          fetchCategories(),
-        ]);
-
-        const product = productRes.product ?? productRes;
-        setFormData({
-          name: product.name || "",
-          price: product.price ? String(product.price) : "",
-          categoryId: product.categoryId ? String(product.categoryId) : "",
-          description: product.description || "",
-          imageUrl: product.imageUrl || "",
-          stockQuantity: product.stockQuantity
-            ? String(product.stockQuantity)
-            : "0",
-        });
-
-        setCategories(categoryRes.categories ?? categoryRes);
+        const data = await fetchCategories();
+        setCategories(data.categories ?? data);
       } catch {
-        setError("Failed to load product data");
-      } finally {
-        setIsLoading(false);
+        console.error("Failed to load categories");
       }
     };
-    loadData();
-  }, [id]);
+    loadCategories();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear file selection when user types a URL
     if (name === "imageUrl" && value) {
       setImageFile(null);
       setImagePreview(null);
@@ -74,6 +53,7 @@ const EditProductForm = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Validate file type
     const validTypes = [
       "image/jpeg",
       "image/png",
@@ -88,6 +68,7 @@ const EditProductForm = () => {
       return;
     }
 
+    // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       setError("Image file must be less than 5MB");
       return;
@@ -95,6 +76,7 @@ const EditProductForm = () => {
 
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
+    // Clear the URL field since we're using a local file
     setFormData((prev) => ({ ...prev, imageUrl: "" }));
     setError(null);
   };
@@ -130,19 +112,19 @@ const EditProductForm = () => {
         stockQuantity: formData.stockQuantity
           ? parseInt(formData.stockQuantity, 10)
           : 0,
-        // Include imageUrl only when using a URL (not a local file upload)
-        ...(!imageFile && { imageUrl: formData.imageUrl || null }),
+        imageUrl: formData.imageUrl || undefined,
       };
 
-      await editProduct(id, payload);
+      const result = await createProduct(payload);
 
-      // Upload new image if a local file was selected
-      if (imageFile) {
+      // If a local file was selected, upload it to the new product
+      if (imageFile && result?.product?.id) {
         setIsUploading(true);
         try {
-          await uploadProductImage(id, imageFile);
+          await uploadProductImage(result.product.id, imageFile);
         } catch {
-          console.error("Image upload failed, but product was updated");
+          // Product was created but image upload failed — still navigate
+          console.error("Image upload failed, but product was created");
         } finally {
           setIsUploading(false);
         }
@@ -150,7 +132,7 @@ const EditProductForm = () => {
 
       navigate("/products");
     } catch (err) {
-      setError(err.message || "Failed to update product");
+      setError(err.message || "Failed to create product");
     } finally {
       setIsSubmitting(false);
     }
@@ -161,17 +143,6 @@ const EditProductForm = () => {
     /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp|svg|avif)/i.test(formData.imageUrl);
 
   const hasImage = isValidImageUrl || imagePreview;
-
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
-        <div className="flex items-center gap-3 text-gray-500">
-          <ClipLoader size={20} color="#6366f1" />
-          Loading product…
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-8">
@@ -184,7 +155,7 @@ const EditProductForm = () => {
           Products
         </Link>
         <span className="mx-2 text-gray-400">&gt;</span>
-        <span className="text-gray-600">Edit Product</span>
+        <span className="text-gray-600">Create New Product</span>
       </nav>
 
       {/* Form card */}
@@ -193,10 +164,11 @@ const EditProductForm = () => {
         className="mx-auto max-w-2xl rounded-2xl border border-gray-200 bg-white p-8 shadow-sm"
       >
         <h1 className="text-2xl font-bold text-gray-900">
-          Edit Product Details
+          New Product Details
         </h1>
         <p className="mt-1 text-sm text-gray-500">
-          Update the information below to modify this product.
+          Fill in the information below to add a new product to your store
+          catalog.
         </p>
 
         {error && (
@@ -476,7 +448,7 @@ const EditProductForm = () => {
             {isSubmitting || isUploading ? (
               <>
                 <ClipLoader size={16} color="#ffffff" />
-                {isUploading ? "Uploading image…" : "Updating…"}
+                {isUploading ? "Uploading image…" : "Saving…"}
               </>
             ) : (
               <>
@@ -494,7 +466,7 @@ const EditProductForm = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                Update Product
+                Save Product
               </>
             )}
           </button>
@@ -504,4 +476,4 @@ const EditProductForm = () => {
   );
 };
 
-export default EditProductForm;
+export default NewProductForm;

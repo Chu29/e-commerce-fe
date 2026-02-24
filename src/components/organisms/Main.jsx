@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { SyncLoader } from "react-spinners";
 import { fetchProducts } from "../../services/product.service";
-import ProductCard from "../ProductCard";
+import ProductCard from "../molecules/ProductCard";
 import productNotFound from "../../assets/images/product_not_found.png";
 
 const Main = ({ selectedCategoryId }) => {

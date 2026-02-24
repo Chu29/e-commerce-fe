@@ -1,6 +1,6 @@
 import Logo from "../components/atoms/Logo";
-import Header from "../components/molecules/Header";
-import NewProductForm from "../components/NewProductForm";
+import Header from "../components/atoms/Header";
+import NewProductForm from "../components/organisms/NewProductForm";
 
 const CreateProductPage = () => {
   return (

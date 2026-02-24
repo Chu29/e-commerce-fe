@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { PiPlusBold } from "react-icons/pi";
-import FilterBar from "../components/atoms/FilterBar";
+import FilterBar from "../components/molecules/FilterBar";
 import Logo from "../components/atoms/Logo";
-import Header from "../components/molecules/Header";
-import Main from "../components/molecules/Main";
-import SearchBar from "../components/organisms/SearchBar";
+import Header from "../components/atoms/Header";
+import Main from "../components/organisms/Main";
+import SearchBar from "../components/molecules/SearchBar";
 import { useNavigate } from "react-router-dom";
 
 const ProductPage = () => {

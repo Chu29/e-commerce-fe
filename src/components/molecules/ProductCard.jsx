@@ -2,8 +2,8 @@ import { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 import { FiTrash2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import placeHolderImg from "../assets/images/placeholder_product_img.jpg";
-import { api } from "../services/api";
+import placeHolderImg from "../../assets/images/placeholder_product_img.jpg";
+import { api } from "../../services/api";
 
 const ProductCard = ({ product, onDeleted }) => {
   const navigate = useNavigate();
