@@ -1,4 +1,5 @@
-import { PiPlus, PiPlusBold } from "react-icons/pi";
+import { useState } from "react";
+import { PiPlusBold } from "react-icons/pi";
 import FilterBar from "../components/atoms/FilterBar";
 import Logo from "../components/atoms/Logo";
 import Header from "../components/molecules/Header";
@@ -8,13 +9,18 @@ import { useNavigate } from "react-router-dom";
 
 const ProductPage = () => {
   const navigate = useNavigate();
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+
   return (
     <>
       <Header>
         <Logo />
         <div className="flex items-center gap-3 w-full sm:flex-1 sm:max-w-2xl">
           <SearchBar />
-          <FilterBar />
+          <FilterBar
+            value={selectedCategoryId}
+            onChange={setSelectedCategoryId}
+          />
         </div>
       </Header>
       <div className=" flex items-center justify-between px-4 py-3 sm:px-6 ">
@@ -31,7 +37,7 @@ const ProductPage = () => {
           <PiPlusBold className="text-lg" /> Create Product
         </button>
       </div>
-      <Main />
+      <Main selectedCategoryId={selectedCategoryId} />
     </>
   );
 };
