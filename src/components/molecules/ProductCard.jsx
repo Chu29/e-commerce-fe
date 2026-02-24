@@ -45,7 +45,7 @@ const ProductCard = ({ product, onDeleted }) => {
         e.stopPropagation();
         navigate(`/products/${product.id}/details`);
       }}
-      className="bg-white rounded-xl shadow-md overflow-hidden max-w-xs flex flex-col transform-3d transition-transform duration-300 hover:scale-102 cursor-pointer "
+      className="bg-white rounded-xl shadow-md overflow-hidden w-full flex flex-col transform-3d transition-transform duration-300 hover:scale-102 cursor-pointer"
     >
       {/* Image Section */}
       <div className="relative">
