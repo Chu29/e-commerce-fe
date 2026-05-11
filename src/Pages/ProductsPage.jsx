@@ -30,12 +30,20 @@ const ProductPage = () => {
             Manage your product catalogue
           </span>
         </h1>
-        <button
-          onClick={() => navigate("/products/new")}
-          className="mt-4 bg-[#3b3bf5] text-white px-4 py-2 rounded-lg hover:bg-[#2a2ae0] cursor-pointer transition-colors flex items-center gap-2"
-        >
-          <PiPlusBold className="text-lg" /> Create Product
-        </button>
+        <div className=" flex items-center gap-3 ">
+          <button
+            onClick={() => navigate("/categories/new")}
+            className="mt-4 bg-[#3b3bf5] text-white px-4 py-2 rounded-lg hover:bg-[#2a2ae0] cursor-pointer transition-colors flex items-center gap-2"
+          >
+            <PiPlusBold className="text-lg" /> Create Category
+          </button>
+          <button
+            onClick={() => navigate("/products/new")}
+            className="mt-4 bg-[#3b3bf5] text-white px-4 py-2 rounded-lg hover:bg-[#2a2ae0] cursor-pointer transition-colors flex items-center gap-2"
+          >
+            <PiPlusBold className="text-lg" /> Create Product
+          </button>
+        </div>
       </div>
       <Main selectedCategoryId={selectedCategoryId} />
     </>
